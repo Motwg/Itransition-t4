@@ -1,10 +1,6 @@
 import re
 
 import dash_bootstrap_components as dbc
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import plotly.express as px
 from dash import Dash, Input, Output, callback, dcc, html
 
 from data import TabData

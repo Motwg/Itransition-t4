@@ -31,11 +31,9 @@ class AliasNetwork:
     def __init__(self, users_with_aliases: pd.DataFrame) -> None:
         self.network = nx.Graph()
         self.aliases = users_with_aliases
-        for i, (user_id, user) in enumerate(users_with_aliases.iterrows()):
+        for user_id, user in users_with_aliases.iterrows():
             for neigbour_id in compute_aliases(user, users_with_aliases).index:
                 self.network.add_edge(user_id, neigbour_id)
-            if i > 5:
-                break
 
     def get_user_aliases(self, user_id: int) -> pd.DataFrame | None:
         try:

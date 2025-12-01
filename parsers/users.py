@@ -3,6 +3,8 @@ from typing import Literal
 
 import pandas as pd
 
+from parsers.config import config
+
 
 def get_users(catalog: Literal['DATA1', 'DATA2', 'DATA3']) -> pd.DataFrame:
     users = pd.read_csv(f'data/{catalog}/users.csv', index_col=0)
@@ -37,6 +39,10 @@ def parse_phone(column: pd.Series) -> pd.Series:
     return (
         column.fillna('')
         .str.replace(r'[^0-9]+', '', regex=True)
-        .apply(lambda x: f'{x[0:3]} {x[3:6]} {x[6:]}' if 12 > len(x) > 7 else '')
+        .apply(
+            lambda x: f'{x[0:3]} {x[3:6]} {x[6:]}'
+            if config('max_number_length') >= len(x) >= config('mix_number_length')
+            else '',
+        )
         .astype(str)
     )

@@ -5,9 +5,10 @@ import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
 from dash import html
+from matplotlib.figure import Figure
 
 
-def fig_to_buffer(fig) -> str:
+def fig_to_buffer(fig: Figure) -> str:
     buf = io.BytesIO()
     fig.savefig(buf, format='png')
     fig_data = base64.b64encode(buf.getbuffer()).decode('ascii')

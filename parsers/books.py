@@ -7,6 +7,7 @@ import pandas as pd
 import yaml
 from dateutil.relativedelta import relativedelta
 
+from parsers.config import config
 from parsers.generic import parse_string
 from parsers.users import parse_name
 
@@ -52,7 +53,14 @@ def parse_year(year: pd.Series) -> pd.Series:
         pd.to_numeric(year, errors='coerce')
         .apply(
             lambda y: y
-            if int((datetime.now(tz=UTC).date() + relativedelta(months=+1)).strftime('%Y')) >= y > 0
+            if int(
+                (
+                    datetime.now(tz=UTC).date()
+                    + relativedelta(months=+(config('prelease_month_limit')))
+                ).strftime('%Y'),
+            )
+            >= y
+            > 0
             else pd.NA,
         )
         .astype('Int64')

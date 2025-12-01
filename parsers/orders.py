@@ -3,7 +3,7 @@ from typing import Literal
 
 import pandas as pd
 
-from parsers.config import config
+from parsers.config import parser_config
 from parsers.generic import parse_string
 
 
@@ -47,7 +47,7 @@ def parse_unit_price(unit_price: pd.Series) -> pd.Series:
     def currency_mult(row: str) -> int:
         mult = 100
         if '€' in row or 'EUR' in row:
-            mult *= config('eur_to_usd')
+            mult *= parser_config('eur_to_usd')
         value = float('{}.{}'.format(*re.findall(r'(\d+)(?:[^\d])?(\d{1,2})?', row)[0]))
         return int(value * mult)
 

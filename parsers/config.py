@@ -1,7 +1,7 @@
 from typing import Any
 
 
-def config(key: str) -> Any:
+def parser_config(key: str) -> Any:
     return {
         'prelease_month_limit': 1,
         'max_number_length': 11,

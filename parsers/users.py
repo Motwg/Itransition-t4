@@ -3,7 +3,7 @@ from typing import Literal
 
 import pandas as pd
 
-from parsers.config import config
+from parsers.config import parser_config
 
 
 def get_users(catalog: Literal['DATA1', 'DATA2', 'DATA3']) -> pd.DataFrame:
@@ -41,7 +41,7 @@ def parse_phone(column: pd.Series) -> pd.Series:
         .str.replace(r'[^0-9]+', '', regex=True)
         .apply(
             lambda x: f'{x[0:3]} {x[3:6]} {x[6:]}'
-            if config('max_number_length') >= len(x) >= config('mix_number_length')
+            if parser_config('max_number_length') >= len(x) >= parser_config('min_number_length')
             else '',
         )
         .astype(str)

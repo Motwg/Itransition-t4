@@ -7,7 +7,7 @@ import pandas as pd
 import yaml
 from dateutil.relativedelta import relativedelta
 
-from parsers.config import config
+from parsers.config import parser_config
 from parsers.generic import parse_string
 from parsers.users import parse_name
 
@@ -56,7 +56,7 @@ def parse_year(year: pd.Series) -> pd.Series:
             if int(
                 (
                     datetime.now(tz=UTC).date()
-                    + relativedelta(months=+(config('prelease_month_limit')))
+                    + relativedelta(months=+(parser_config('prelease_month_limit')))
                 ).strftime('%Y'),
             )
             >= y

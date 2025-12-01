@@ -43,6 +43,7 @@ class TabData:
             .agg({'paid_price': 'sum'})
             .nlargest(1, 'paid_price')
         )
-        if user_aliases := self.aliases.get_user_aliases(int(user.first_valid_index())):
+        user_aliases = self.aliases.get_user_aliases(int(user.first_valid_index()))
+        if user_aliases is not None:
             return user_aliases
         return pd.DataFrame(self.users.loc[user.index[0]].to_dict(), index=[0])
